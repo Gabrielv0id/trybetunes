@@ -10,16 +10,6 @@ export default class Login extends Component {
     nome: '',
   };
 
-  // fetchApi = async () => {
-  //   const response = await createUser();
-  //   const data = await response.json();
-  //   this.setState(
-  //     {
-  //       isLoading: false,
-  //     },
-  //   );
-  // };
-
   onInputChange = (event) => {
     const { name, value } = event.target;
     this.setState(
