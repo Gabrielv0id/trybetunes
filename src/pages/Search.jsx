@@ -42,7 +42,6 @@ export default class Search extends Component {
     event.preventDefault();
     this.setState({ isLoading: true });
     const response = await searchAlbumsAPI(artist);
-    console.log(response);
     this.setState({
       nameArtist: artist,
       albums: response,
@@ -91,7 +90,7 @@ export default class Search extends Component {
              <h2>{`Resultado de álbuns de: ${nameArtist} `}</h2>
              <ul>
                {albums.map((album) => (
-                 <li key={ album.collectionName }>
+                 <li key={ album.collectionId }>
                    <Link
                      to={ `/album/${album.collectionId}` }
                      data-testid={ `link-to-album-${album.collectionId}` }
