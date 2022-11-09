@@ -18,11 +18,7 @@ export default class Album extends Component {
   Card = (musicsList, array) => {
     musicsList.forEach((track, index) => {
       if (index !== 0) {
-        array.push({
-          trackName: track.trackName,
-          previewUrl: track.previewUrl,
-          trackId: track.trackId,
-        });
+        array.push(track);
       }
     });
   };
@@ -48,18 +44,21 @@ export default class Album extends Component {
     return (
       <div data-testid="page-album">
         <Header />
-        Album
-        <h2 data-testid="album-name">{`Collection Name ${albumName}`}</h2>
-        <h3 data-testid="artist-name">{`Artist Name ${artistName}`}</h3>
-        <ul>
-          {card.map((music) => (
-            <MusicCard
-              key={ music.trackId }
-              trackNames={ music.trackName }
-              previewUrls={ music.previewUrl }
-            />
-          ))}
-        </ul>
+        <div>
+          <h2 data-testid="album-name">{`Collection Name ${albumName}`}</h2>
+          <h3 data-testid="artist-name">{`Artist Name ${artistName}`}</h3>
+          <ul>
+            {card.map((music) => (
+              <MusicCard
+                key={ music.trackId }
+                trackNames={ music.trackName }
+                previewUrls={ music.previewUrl }
+                trackId={ music.trackId }
+                music={ music }
+              />
+            ))}
+          </ul>
+        </div>
       </div>
     );
   }
