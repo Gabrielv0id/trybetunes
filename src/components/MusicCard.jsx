@@ -1,29 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Carregando from './Carregando';
-import { addSong } from '../services/favoriteSongsAPI';
 
 export default class MusicCard extends Component {
-  state = {
-    isLoading: false,
-  };
-
-  onChangeValue = async ({ target }) => {
-    const { checked } = target;
-    const { music } = this.props;
-    this.setState({ isLoading: true });
-    if (checked) {
-      await addSong(music);
-    }
-    this.setState({ isLoading: false });
-  };
-
   render() {
-    const { trackNames, previewUrls, trackId } = this.props;
-    const { isLoading } = this.state;
+    const {
+      trackNames,
+      previewUrls,
+      trackId,
+      onChangeValue,
+      music,
+      check,
+    } = this.props;
     return (
       <li>
-        {isLoading && <Carregando />}
         <p>{trackNames}</p>
         <audio data-testid="audio-component" src={ previewUrls } controls>
           <track kind="captions" />
@@ -37,7 +26,8 @@ export default class MusicCard extends Component {
             type="checkbox"
             name="favorite"
             id={ trackId }
-            onChange={ this.onChangeValue }
+            onChange={ ({ target }) => onChangeValue(music, target.checked) }
+            checked={ check }
           />
         </label>
       </li>
