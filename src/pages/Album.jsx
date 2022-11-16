@@ -60,14 +60,12 @@ export default class Album extends Component {
   };
 
   onChangeValue = async (music, checked) => {
-    console.log(checked);
     this.setState({ isLoading: true });
     if (checked) {
       await addSong(music);
     } else {
       await removeSong(music);
     }
-    this.getFavoriteMusics();
   };
 
   render() {
@@ -76,8 +74,8 @@ export default class Album extends Component {
       <div data-testid="page-album">
         <Header />
         <div>
-          <h2 data-testid="album-name">{`Album: ${albumName}`}</h2>
-          <h3 data-testid="artist-name">{`Artist: ${artistName}`}</h3>
+          <h2 data-testid="album-name">{`Collection Name: ${albumName}`}</h2>
+          <h3 data-testid="artist-name">{`Artist Name: ${artistName}`}</h3>
           <ul>
             {isLoading ? <Carregando /> : (
               card.map((music, index) => (
