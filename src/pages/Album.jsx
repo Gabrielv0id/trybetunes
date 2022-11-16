@@ -11,8 +11,8 @@ export default class Album extends Component {
     card: [],
     artistName: '',
     albumName: '',
-    checked: [],
-    isLoading: true,
+    favoriteList: [],
+    isLoading: false,
   };
 
   componentDidMount() {
@@ -48,14 +48,9 @@ export default class Album extends Component {
   };
 
   getFavoriteMusics = async () => {
-    const { card } = this.state;
     const favoriteList = await getFavoriteSongs();
-    this.setState({ isLoading: false });
-    const check = card
-      .map((music) => favoriteList
-        .some((track) => music.trackId === track.trackId));
     this.setState({
-      checked: check,
+      favoriteList,
     });
   };
 
@@ -66,10 +61,11 @@ export default class Album extends Component {
     } else {
       await removeSong(music);
     }
+    this.setState({ isLoading: false });
   };
 
   render() {
-    const { card, artistName, albumName, checked, isLoading } = this.state;
+    const { card, artistName, albumName, favoriteList, isLoading } = this.state;
     return (
       <div data-testid="page-album">
         <Header />
@@ -78,14 +74,15 @@ export default class Album extends Component {
           <h3 data-testid="artist-name">{`Artist Name: ${artistName}`}</h3>
           <ul>
             {isLoading ? <Carregando /> : (
-              card.map((music, index) => (
+              card.map((music) => (
                 <MusicCard
                   key={ music.trackId }
                   trackNames={ music.trackName }
                   previewUrls={ music.previewUrl }
                   trackId={ music.trackId }
                   music={ music }
-                  check={ checked[index] }
+                  check={ favoriteList
+                    .some((favoriteMusic) => (favoriteMusic.trackId === music.trackId)) }
                   onChangeValue={ this.onChangeValue }
                 />
               ))
